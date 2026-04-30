@@ -204,17 +204,11 @@ DrowSim-FYP/
 ├── training/                       # Model training pipeline
 │   ├── train.py                    # Training script
 │   ├── dataset.py                  # FL3D dataset loader + preprocessing
-│   ├── model.py                    # BiLSTM_Attention architecture
-│   └── focal_loss.py               # Focal Loss implementation
-│
-├── nginx/
-│   └── drowsim.conf                # Nginx reverse proxy configuration
 │
 ├── docs/
 │   └── architecture_diagram.png
 │
 ├── .gitignore
-├── LICENSE
 └── README.md
 ```
 
@@ -509,11 +503,6 @@ This project was developed as a Final Year Project (FYP) for the degree of **Bac
 - [PyTorch](https://pytorch.org) — deep learning framework
 - [Let's Encrypt](https://letsencrypt.org) — free SSL certificates
 
----
-
-## 📄 License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
 ---
 
