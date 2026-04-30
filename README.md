@@ -193,16 +193,15 @@ DrowSim-FYP/
 │
 ├── server/                         # FastAPI inference server (AWS EC2)
 │   ├── server4.py                  # Main server — BiLSTM + /infer endpoint
-│   ├── BiLSTM4.pth                 # Trained model weights
 │   └── requirements_server.txt
 │
 ├── client/                         # Raspberry Pi 4 client
 │   ├── client.py                   # Main client — capture, extract, transmit, alert
 │   └── requirements_client.txt
 │
-├── training/                       # Model training pipeline
-│   ├── train.py                    # Training script
-│   ├── dataset.py                  # FL3D dataset loader + preprocessing
+├── module/                       
+│   ├── BiLSTM4.pth             
+│   ├── BiLSTM4FetCluResult                 
 │
 ├── docs/
 │   └── architecture_diagram.png
