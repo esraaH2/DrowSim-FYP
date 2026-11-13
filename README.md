@@ -195,16 +195,15 @@ DrowSim-FYP/
 │   ├── server4.py                  # Main server — BiLSTM + /infer endpoint
 │   └── requirements_server.txt
 │
-├── client/                         # Raspberry Pi 4 client
-│   ├── client.py                   # Main client — capture, extract, transmit, alert
+├── Client-side/                    # Raspberry Pi 4 client
+│   ├── C4F.py                      # Main client — capture, extract, transmit, alert
 │   └── requirements_client.txt
 │
-├── module/                       
-│   ├── BiLSTM4.pth             
-│   ├── BiLSTM4FetCluResult                 
+├── module/
+│   ├── BiLSTM4.pth                 # Trained model weights (loaded by the server)
+│   └── BiLSTM4FetCluResult.ipynb   # Training & evaluation notebook (Kaggle)
 │
-├── docs/
-│   └── architecture_diagram.png
+├── docs/                           # Project images
 │
 ├── .gitignore
 └── README.md
@@ -226,14 +225,14 @@ DrowSim-FYP/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<your-username>/DrowSim-FYP.git
+git clone https://github.com/esraaH2/DrowSim-FYP.git
 cd DrowSim-FYP/server
 
 # 2. Install dependencies
 pip install -r requirements_server.txt
 
-# 3. Ensure model weights are present
-ls BiLSTM4.pth   # should exist
+# 3. Model weights are loaded automatically from ../module/BiLSTM4.pth
+#    (to use another file: export DROWSIM_MODEL=/path/to/model.pth)
 
 # 4. Run the server
 uvicorn server4:app --host 0.0.0.0 --port 8000
@@ -256,18 +255,18 @@ pydantic
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<your-username>/DrowSim-FYP.git
-cd DrowSim-FYP/client
+git clone https://github.com/esraaH2/DrowSim-FYP.git
+cd DrowSim-FYP/Client-side
 
 # 2. Install dependencies
 pip install -r requirements_client.txt
 
-# 3. Configure server URL in client.py
+# 3. Configure SERVER_URL in C4F.py
 # SERVER_URL = "https://drowsim.fyp.systems/infer"   # production
 # SERVER_URL = "http://<your-ip>:8000/infer"          # local testing
 
 # 4. Run the client
-python client.py
+python C4F.py
 ```
 
 **Client dependencies:**
@@ -283,17 +282,14 @@ numpy
 
 ### 🧪 Training (Optional — reproduce the model)
 
-```bash
-cd DrowSim-FYP/training
+The full training and evaluation pipeline is in `module/BiLSTM4FetCluResult.ipynb`.
 
-# Install training dependencies
-pip install torch numpy scikit-learn pandas matplotlib seaborn
+1. Create a Kaggle notebook and import `module/BiLSTM4FetCluResult.ipynb`.
+2. Attach the [FL3D dataset](https://www.kaggle.com/datasets/matjazmuc/frame-level-driver-drowsiness-detection-fl3d) (see Dataset section).
+3. Enable a GPU accelerator and select **Run All**.
+4. Copy the resulting `BiLSTM4.pth` into `module/` to use it with the server.
 
-# Prepare FL3D dataset (see Dataset section)
-
-# Train
-python train.py
-```
+To run locally instead, install `torch numpy pandas scikit-learn matplotlib seaborn tqdm` and change the dataset path in the notebook to your local copy.
 
 ---
 
