@@ -3,10 +3,11 @@ DrowSim — FastAPI Inference Server
 Model  : BiLSTM + Attention  (input_size=4, hidden_size=64, num_classes=3)
 Model file : BiLSTM4.pth
 
-Run:
-    uvicorn server:app --host 0.0.0.0 --port 8000
+Run (from the server/ folder):
+    uvicorn server4:app --host 0.0.0.0 --port 8000
 """
 
+import os
 import numpy as np
 import torch
 import torch.nn as nn
@@ -74,7 +75,11 @@ def compute_features_4(pts5):
 app    = FastAPI(title="DrowSim Inference Server")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-MODEL_PATH = "BiLSTM4.pth"
+# Weights live in ../module/BiLSTM4.pth; override with the DROWSIM_MODEL env var
+MODEL_PATH = os.environ.get(
+    "DROWSIM_MODEL",
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "module", "BiLSTM4.pth"),
+)
 
 model = BiLSTM_Attention(input_size=4, hidden_size=64,
                          num_layers=2, num_classes=3).to(device)
